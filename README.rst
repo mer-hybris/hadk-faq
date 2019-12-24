@@ -231,6 +231,7 @@ hybris-16.0
     cd $ANDROID_ROOT/external
     git clone --recurse-submodules https://github.com/mer-hybris/libhybris.git
     cd $ANDROID_ROOT
+    hybris-patches/apply-patches.sh --mb
 
 - Copy files from https://github.com/sailfishos-oneplus5/droid-config-cheeseburger/tree/hybris-16.0/sparse/usr/libexec/droid-hybris/system/etc/init to your config repo (to `hybris/droid-configs/sparse/usr/libexec/droid-hybris/system/etc/init`) and rebuild config packages using :code:`rpm/dhd/helpers/build_packages.sh -c`
 
