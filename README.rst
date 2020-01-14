@@ -615,6 +615,13 @@ To use memless haptics driver instead of droid-vibrator, you need a kernel hapti
 Miscellaneous
 =============
 
+Bootctl fixes (Operation not permitted)
+---------------------------------------
+
+- For treble enabled devices, udev might create relative symlinks to your block devices in dev/block/bootdevice/by-name. This breaks bootctl because *someone* wrote some bad code in the boot control HAL (http://www.merproject.org/logs/%23sailfishos-porters/%23sailfishos-porters.2019-07-14.log.html#t2019-07-14T22:05:25).
+
+- To fix "operation not permitted errors" apply the following patch to /lib/udev/rules.d/998-droid-system.rules: https://github.com/sailfish-oneplus6/droid-config-enchilada/commit/e96f5f9b380ddbee87626b3323ca72c43ba7a350#diff-02d3ee8eb10bab42c69060dd35f29c99
+
 Flashlight shortcut
 -------------------
 
