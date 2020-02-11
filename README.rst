@@ -479,7 +479,7 @@ If your device is dual SIM, add also these lines (don't add them otherwise!)::
   name=RIL2
   socket=/dev/socket/rild2
 
-Or for modern devices that don't use a socket (e.g. OnePlus 5/5T/6::
+Or for hybris-15.1 or higher devices (e.g. OnePlus 5/5T/6)::
 
   [ril_1]
   transport=binder:name=slot2
