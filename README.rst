@@ -468,14 +468,24 @@ If ofono is not working properly and shows :code:`"ERROR! Can't connect to RILD:
   name=RIL1
   socket=/dev/socket/rild
 
+Dual SIM devices
+-------------------------
+
+Add the jolla-settings-networking-multisim to patterns like done here https://github.com/mlehtima/droid-config-fp2-sibon/blob/master/patterns/jolla-configuration-fp2-sibon.yaml#L15
+
 If your device is dual SIM, add also these lines (don't add them otherwise!)::
 
   [ril_1]
   name=RIL2
   socket=/dev/socket/rild2
 
+Or for hybris-15.1 or higher devices (e.g. OnePlus 5/5T/6)::
+
+  [ril_1]
+  transport=binder:name=slot2
+  name=slot2
+
 - If it works add your `ril_subscription.conf` to the `droid-config-$DEVICE` like done here https://github.com/Nokius/droid-config-find5/commit/3e3e636e7e3973f9102ebca9dea79794c00c9174
-- Also add the jolla-settings-networking-multisim to patterns like done here https://github.com/mlehtima/droid-config-fp2-sibon/blob/master/patterns/jolla-configuration-fp2-sibon.yaml#L15
 - Fix remembering manual access point configurations across reboots run the following command before building the image::
 
     sed -i "/begin 60_ssu/a chown -R radio:radio /var/lib/ofono" Jolla-@RELEASE@-$DEVICE-@ARCH@.ks
