@@ -235,6 +235,20 @@ hybris-16.0
 
 - Copy files from https://github.com/sailfishos-oneplus5/droid-config-cheeseburger/tree/hybris-16.0/sparse/usr/libexec/droid-hybris/system/etc/init to your config repo (to `hybris/droid-configs/sparse/usr/libexec/droid-hybris/system/etc/init`) and rebuild config packages using :code:`rpm/dhd/helpers/build_packages.sh -c`
 
+- When you get :code:`telnet` in the SFOS rootfs (port 2323) and can run :code:`/usr/libexec/droid-hybris/system/bin/logcat`, see if you get lines similar to below filtering the output using :code:`grep` for example::
+
+    E linker  : library "/usr/libexec/droid-hybris/system/lib64/libselinux_stubs.so" ("/usr/libexec/droid-hybris/system/lib64/libselinux_stubs.so") needed or dlopened by "/system/bin/hwservicemanager" is not accessible for the namespace: [name="(default)", ld_library_paths="", default_library_paths="/system/lib64", permitted_paths="/system/lib64/drm:/system/lib64/extractors:/system/lib64/hw:/system/product/lib64:/system/framework:/system/app:/system/priv-app:/vendor/framework:/vendor/app:/vendor/priv-app:/odm/framework:/odm/app:/odm/priv-app:/oem/app:/system/product/framework:/system/product/app:/system/product/priv-app:/data:/mnt/expand"]
+    F linker  : CANNOT LINK EXECUTABLE "/system/bin/hwservicemanager": library "/usr/libexec/droid-hybris/system/lib64/libselinux_stubs.so" needed or dlopened by "/system/bin/hwservicemanager" is not accessible for the namespace "(default)"
+    E linker  : library "/usr/libexec/droid-hybris/system/lib64/libselinux_stubs.so" ("/usr/libexec/droid-hybris/system/lib64/libselinux_stubs.so") needed or dlopened by "/system/bin/servicemanager" is not accessible for the namespace: [name="(default)", ld_library_paths="", default_library_paths="/system/lib64", permitted_paths="/system/lib64/drm:/system/lib64/extractors:/system/lib64/hw:/system/product/lib64:/system/framework:/system/app:/system/priv-app:/vendor/framework:/vendor/app:/vendor/priv-app:/odm/framework:/odm/app:/odm/priv-app:/oem/app:/system/product/framework:/system/product/app:/system/product/priv-app:/data:/mnt/expand"]
+    F linker  : CANNOT LINK EXECUTABLE "/system/bin/servicemanager": library "/usr/libexec/droid-hybris/system/lib64/libselinux_stubs.so" needed or dlopened by "/system/bin/servicemanager" is not accessible for the namespace "(default)"
+    E linker  : library "/usr/libexec/droid-hybris/system/lib64/libselinux_stubs.so" ("/usr/libexec/droid-hybris/system/lib64/libselinux_stubs.so") needed or dlopened by "/vendor/bin/vndservicemanager" is not accessible for the namespace: [name="(default)", ld_library_paths="", default_library_paths="/vendor/lib64", permitted_paths="/odm:/vendor"]
+    F linker  : CANNOT LINK EXECUTABLE "/vendor/bin/vndservicemanager": library "/usr/libexec/droid-hybris/system/lib64/libselinux_stubs.so" needed or dlopened by "/vendor/bin/vndservicemanager" is not accessible for the namespace "(default)"
+
+  - If you don't and :code:`systemctl status droid-hal-init` returns :code:`active (running)` you can skip the below steps.
+  - Copy https://github.com/sailfishos-oneplus5/droid-config-cheeseburger/blob/hybris-16.0/sparse/usr/libexec/droid-hybris/system/etc/ld.config.28.txt and https://github.com/sailfishos-oneplus5/droid-config-cheeseburger/blob/hybris-16.0/sparse/lib/systemd/system/system-etc-ld.config.28.txt.mount to your droid-config sparse files.
+  - Create the following symlink in your droid-config sparse files: https://github.com/sailfishos-oneplus5/droid-config-cheeseburger/blob/hybris-16.0/sparse/lib/systemd/system/local-fs.target.wants/system-etc-ld.config.28.txt.mount
+  - Rebuild config packages using :code:`rpm/dhd/helpers/build_packages.sh -c` and install the first new droid-config RPM package from :code:`$ANDROID_ROOT/droid-local-repo/$DEVICE/droid-configs/` on your device using :code:`zypper`, or :code:`rpm/dhd/helpers/build_packages.sh -i` and flash the new zip.
+
 Graphics
 ========
 
