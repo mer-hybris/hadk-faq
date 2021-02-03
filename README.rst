@@ -173,6 +173,71 @@ No rule to make target kernel needed by boot.img or similar error
 
 - Common error in hybris10.1 due to the old CM10.1 kernels and how they were built back then.
 
+Migrate patterns to meta-packages
+---------------------------------
+
+Sailfish OS 3.4.0 is the last version where patterns are still supported.
+
+If you're still using patterns (i.e. you still have ``$ANDROID_ROOT/hybris/droid-configs/patterns/jolla-hw-adaptation-$DEVICE.yaml``), the next Sailfish OS release will cause error when trying to build a flashable image for your port:
+
+``Error <creator>[01/28 07:26:14] : Unable to find package: patterns-sailfish-device-configuration-$DEVICE``
+
+To fix, migrate patterns to meta-packages with this helper script from the droid-configs submodule:
+
+.. code-block:: bash
+
+  PLATFORM_SDK $
+
+  cd $ANDROID_ROOT
+  cd hybris/droid-configs/droid-configs-device
+  git fetch origin master
+  git checkout master
+  cd ..
+  droid-configs-device/helpers/migrate_patterns.sh
+
+Check the changes with ``git status; git diff``, commit when happy. The end result will be similar to https://github.com/mer-hybris/droid-config-sony-ganges-pie/pull/62.
+
+If the script fails, comment out the offending patterns until it succeeds. Convert the failed patterns manually as shown in the sub-section below.
+
+Lastly, update your ``droid-hal-version`` submodule to have this change https://github.com/mer-hybris/droid-hal-version/pull/1, which ensures your existing users also switch to meta-packages when they upgrade from 3.4.0 to newer releases.
+
+If all of the above looks daunting, there should be someone to guide you through at the #sailfishos-porters IRC channel.
+
+Alternatively, if you haven't gone too far into your port yet and/or haven't released it, you could restart porting from scratch (the ``add_new_device.sh`` script and the templates will initialise device repos to use meta-packages already).
+
+Converting manually
+~~~~~~~~~~~~~~~~~~~
+
+The conversion is pretty straightforward. Let's assume the contents of the ``patterns/my-extra-tools.yaml`` file:
+
+.. code-block:: yaml
+
+  Description: My extra tools for porting
+  Name: my-extra-tools
+  Requires:
+  - pattern:my-other-helpers
+  - valgrind
+  - my-custom-debugger
+  - my-test-suite
+
+  Summary: My extra tools
+
+becomes a section in your ``.spec`` (or ``patterns/my-extra-tools.inc`` which then gets included into ``.spec``):
+
+.. code-block:: spec
+
+  %package -n patterns-sailfish-device-my-extra-tools
+  Summary: My extra tools
+  Requires: patterns-sailfish-device-my-other-helpers
+  Requires: valgrind
+  Requires: my-custom-debugger
+  Requires: my-test-suite
+
+  %description -n patterns-sailfish-device-my-extra-tools
+  My extra tools for porting
+
+  %files -n patterns-sailfish-device-my-extra-tools
+
 Android base specific fixes
 ===========================
 
