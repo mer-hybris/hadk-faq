@@ -199,7 +199,7 @@ Check the changes with ``git status; git diff``, commit when happy. The end resu
 
 If the script fails, comment out the offending patterns until it succeeds. Convert the failed patterns manually as shown in the sub-section below.
 
-Lastly, update your ``droid-hal-version`` submodule to have this change https://github.com/mer-hybris/droid-hal-version/pull/1, which ensures your existing users also switch to meta-packages when they upgrade from 3.4.0 to newer releases.
+Lastly, update your ``droid-hal-version`` submodule to have this change https://github.com/mer-hybris/droid-hal-version/pull/18, which ensures your existing users also switch to meta-packages when they upgrade from 3.4.0 to newer releases.
 
 If all of the above looks daunting, there should be someone to guide you through at the #sailfishos-porters IRC channel.
 
