@@ -864,6 +864,27 @@ Prerequisities
 - Point your existing users to the OTA section of your device's wiki
 - Once the next Sailfish OS release comes out and your port adopts it, you can create a new repository in OBS with that version and your users will OTA to it.
 
+OBS-less OTA updates
+--------------------
+
+Follow the "OTA (Over-the-Air) Updates" chapter in HADK.
+
+For ports that **already have and established OTA via the current Sailfish OBS**, this is how to switch your current users to the self-hosted repository:
+
+- Add the following two lines to your config spec:
+
+.. code-block:: diff
+
+    diff --git a/droid-config-$DEVICE.spec b/droid-config-$DEVICE.spec
+     %define community_adaptation 1
+    +# OTA via self-hosted repo needs to have all adaptation-community repos removed
+    +Conflicts: community-adaptation-testing
+    +Obsoletes: community-adaptation-testing
+
+- Once you have tested the switch-over successfully, publish the changes made to your droid-configs repo to the existing OBS, so that all the users of your port can update and thus switch to your provided repository hosting.
+
+- The above switch-over will remove both adaptation-community and adaptation-community-common repos. The latter is for the backports, which means it will be porter's responsibility to maintain backports after having switched to a self-hosted server.
+
 Jolla Store access
 ==================
 
