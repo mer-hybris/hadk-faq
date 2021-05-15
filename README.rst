@@ -784,6 +784,12 @@ Fixing the screen timeout issue
 - Could be some blanking inhibit mode (keep display on while charging, demo-mode & co), or some application doing blank prevent ping-pong with mce -> check with "dbus-monitor --system sender=com.nokia.mce" what kind of signals get emitted when swiping away from lockscreen / shortly after
 - https://github.com/sailfishos-wt88047/droid-config-wt88047/commit/4512092dbba56ac9a6bf69cb034ceca8512f5a38
 
+Kernel 3.0.x
+------------
+
+Since sailfish 3.0.3.x glibc is built with minimum kernel set to 3.2.0. On devices with kernel < 3.2.0 everything which use glibc or busybox-static will fail with error: "FATAL: kernel too old". /init-debug will fail with: "Kernel panic - not syncing: Attempted to kill init!"
+
+- Add repository with patched glibc to droid-configs/sparse like here: https://github.com/elros34/droid-config-moto_msm8960_jbbl/blob/master/sparse/usr/share/ssu/features.d/glibc2.ini
 
 OBS build and Over-the-Air updates (OTA)
 ========================================
