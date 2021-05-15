@@ -314,6 +314,30 @@ hybris-16.0
   - Create the following symlink in your droid-config sparse files: https://github.com/sailfishos-oneplus5/droid-config-cheeseburger/blob/hybris-16.0/sparse/lib/systemd/system/local-fs.target.wants/system-etc-ld.config.28.txt.mount
   - Rebuild config packages using :code:`rpm/dhd/helpers/build_packages.sh -c` and install the first new droid-config RPM package from :code:`$ANDROID_ROOT/droid-local-repo/$DEVICE/droid-configs/` on your device using :code:`zypper`, or :code:`rpm/dhd/helpers/build_packages.sh -i` and flash the new zip.
 
+hybris-17.1
+-----------
+
+- Apply patches as on hybris-16 but from the ``hybris-17.1`` branch
+- latest gst-droid build fail on 4.0.1.48: ``'Run-time dependency gstreamer-photography-1.0 found: NO (tried pkgconfig and cmake)'``::
+
+    cd hybris/mw && rm -rf gst-droid
+    git clone --recurse https://github.com/sailfishos/gst-droid -b 0.20201104.0
+    build_packages.sh -b hybris/mw/gst-droid
+    build_packages.sh --mw=https://github.com/sailfishos/gmp-droid.git
+
+- You need to export ``TEMPORARY_DISABLE_PATH_RESTRICTIONS=true`` before building android part otherwise hybris-boot.img will not include hybris initramfs
+- Do not disable selinux, set it to 1 from kernel cmdline and make it permissive
+- Add to sparse: https://github.com/mer-hybris/droid-config-sony-seine/tree/eaa09db67b94352ef801417363008dc4005d9213/sparse/etc/selinux. You may need to replace symlinks with the actual files from your device.
+- Add ``'%define android_version_major 10'`` to droid-config-$DEVICE.spec
+- droid-hal: ``'cp: cannot stat './out/soong/.intermediates/art/build/apex/com.android.runtime.release/android_common_com.android.runtime.release/image.apex/lib/bionic/libdl.so': No such file or directory'``
+
+  - Change paths in https://github.com/mer-hybris/droid-hal-device/blob/master/droid-hal-device.inc#L604-L605 to ``art_path=%{android_root}/out/target/product/%{device}/system/`` and ``apex_path=apex/com.android.runtime.release``
+
+- adaptation0 repo can't be refreshed on fresh platform sdk::
+
+    sudo ssu domain sailfish
+
+
 Graphics
 ========
 
