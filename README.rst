@@ -314,6 +314,18 @@ hybris-16.0
   - Create the following symlink in your droid-config sparse files: https://github.com/sailfishos-oneplus5/droid-config-cheeseburger/blob/hybris-16.0/sparse/lib/systemd/system/local-fs.target.wants/system-etc-ld.config.28.txt.mount
   - Rebuild config packages using :code:`rpm/dhd/helpers/build_packages.sh -c` and install the first new droid-config RPM package from :code:`$ANDROID_ROOT/droid-local-repo/$DEVICE/droid-configs/` on your device using :code:`zypper`, or :code:`rpm/dhd/helpers/build_packages.sh -i` and flash the new zip.
 
+hybris-17.1
+-----------
+
+- Apply patches as on hybris-16 but from the ``hybris-17.1`` branch
+- You need to export ``TEMPORARY_DISABLE_PATH_RESTRICTIONS=true`` before building android part otherwise hybris-boot.img will not include hybris initramfs
+- Do not disable selinux, set it to 1 from kernel cmdline and make it permissive
+- Add to sparse: https://github.com/mer-hybris/droid-config-sony-seine/tree/eaa09db67b94352ef801417363008dc4005d9213/sparse/etc/selinux. You may need to replace symlinks with the actual files from your device.
+- Add ``'%define android_version_major 10'`` to droid-config-$DEVICE.spec
+
+
+
+
 Graphics
 ========
 
