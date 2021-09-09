@@ -911,4 +911,4 @@ Jolla Store access
 - IMEI for devices with modem, note - your GSM modem should provide a valid IMEI even without an inserted SIM! Always a good cross-check that IMEI matches the one on your phone's box or under battery, and in CM/Lineage/Android
 - For devices without modem -- WLAN or BT MAC address.
 - Find another port/phone and prove that unique ID there is different than yours, and that all of them persist across reboots.
-- If unique ID is OK then ping pketo on `#sailfishos-porters` with "Device model" line from `ssu s` to enable store for you.
+- If unique ID is OK then ping Keto on `#sailfishos-porters` (on OFTC IRC network) with "Device model" line from `ssu s` to enable store for you.
