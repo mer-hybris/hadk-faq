@@ -873,7 +873,7 @@ Prerequisities
   - Make the "Name" to match exactly "sailfishos_X.Y.Z.W"
 - Add nemo:testing:hw:common to that as additional repo just like you did with :devel: above
 - Ensure NO webhooks point to :testing ! Cross-check with https://webhook.merproject.org/webhook
-- Promote by using osc copypac to all your device packages from devel to testing (useful script: http://pastebin.com/GssLRr8e )(How To https://gist.github.com/taaem/53ed3a99893d323d7ab3bd8d07540f50 )
+- Promote by using osc copypac to all your device packages from devel to testing (useful script: https://pastebin.com/FwuVB52x )(How To https://gist.github.com/taaem/53ed3a99893d323d7ab3bd8d07540f50 )
 
   - use this (or simpler "Submit Package" WebUI option) also in future whenever a HW adaptation package needs updating in between sfos releases
   - (PR is being prepared to add device hw version to zip filename, HW Adaptation version is also shown in About Product, and is incremented by 1 each time OBS automatically rebuilds droid-hal-version-$DEVICE whenever any hw package changes ;))
