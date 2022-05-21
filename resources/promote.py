@@ -12,5 +12,5 @@ for p in packages.split('\n'):
     p = p.strip()
     if p == '' or p[0] == '#' or p == "_pattern":
         continue
-    print("osc -A https://api.sailfishos.org copypac {0} {1} {2}".format(drepo,p,trepo))
+    print("osc -A https://build.sailfishos.org copypac {0} {1} {2}".format(drepo,p,trepo))
 
