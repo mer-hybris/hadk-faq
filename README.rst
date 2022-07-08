@@ -397,7 +397,12 @@ Devices with Mali GPU
 
 - Rebuild droid-hal and libhybris packages::
 
-    sudo mount -i -o remount,suid $HOME)
+    PLATFORM_SDK $
+    
+    cd $ANDROID_ROOT
+    rpm/dhd/helpers/build_packages.sh --droid-hal
+    rpm/dhd/helpers/build_packages.sh --mw
+    
 
 Graphics performance improvements
 ---------------------------------
